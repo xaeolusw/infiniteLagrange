@@ -1,4 +1,5 @@
 import time as t
+import json
 import pandas as pd #如何安装pandas
 
 # 计算两个坐标之间的距离
@@ -77,7 +78,31 @@ def get_begin_addr(target_addr,outpost_addr,begin_addr_x):    #通过设置前�
 def get_need_time(distance,speed):  #通过设置距离和速度获取需要的时间，以分钟为单位
     return (distance * 10000)/speed
 
+def read_data() :
+    data = {}
+    try:
+        """
+        json中重要的几个函数：
+        `dump` - 将Python对象按照JSON格式序列化到文件中
+        `dumps` - 将Python对象处理成JSON格式的字符串
+        `load` - 将文件中的JSON数据反序列化成对象
+        `loads` - 将字符串的内容反序列化成Python对象
+        """
+        with open('test/data.json', 'r', encoding='utf-8') as fs:
+            data = json.load(fs)
+    except IOError as e:
+        print(e)
+    return data
 
+if __name__ == '__main__':
+    data = read_data()
+    print(data['user'][0]['basement_addr'])
+    # t = tuple(data['user'][0]['basement_addr'])
+    
+    
+    print(type(data))
+    print(type(json.dumps(data)))
+exit()
 
 pd.set_option('expand_frame_repr', False)  # 当列太多时显示不清楚
 
