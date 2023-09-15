@@ -1,6 +1,3 @@
-"""
-递归回溯法：叫称为试探法，按选优条件向前搜索，当搜索到某一步，发现原先选择并不优或达不到目标时，就退回一步重新选择，比较经典的问题包括骑士巡逻、八皇后和迷宫寻路等。
-"""
 import sys
 import time
 
@@ -24,7 +21,8 @@ def patrol(board, row, col, step=1):
             global total
             total += 1
             print(f'第{total}种走法: ')
-            print_board(board)
+            # print_board(board)
+            test_pos (board, row, col)
         patrol(board, row - 2, col - 1, step + 1)
         patrol(board, row - 1, col - 2, step + 1)
         patrol(board, row + 1, col - 2, step + 1)
@@ -34,11 +32,43 @@ def patrol(board, row, col, step=1):
         patrol(board, row - 1, col + 2, step + 1)
         patrol(board, row - 2, col + 1, step + 1)
         board[row][col] = 0
-  
+
+def test_pos (board, row, col):
+    if row - 2 >= 0 and row - 2 < SIZE :
+       if col - 1 >=0 and col - 1 < SIZE:
+           if board[row - 2][col - 1] == 1:
+               print_board(board)
+       elif col + 1 >= 0 and col + 1 < SIZE:
+           if board[row - 2][col + 1] == 1:
+               print_board(board)
+    elif row - 1 >= 0 and row - 1 < SIZE :
+       if col - 2 >=0 and col - 2 < SIZE:
+           if board[row - 1][col - 2] == 1:
+               print_board(board)
+       elif col + 2 >= 0 and col + 2 < SIZE:
+           if board[row - 1][col + 2] == 1:
+               print_board(board)
+    elif row + 1 >= 0 and row + 1 < SIZE :
+       if col - 2 >=0 and col - 2 < SIZE:
+           if board[row + 1][col - 2] == 1:
+               print_board(board)
+       elif col + 2 >= 0 and col + 2 < SIZE:
+           if board[row + 1][col + 2] == 1:
+               print_board(board)
+    elif row + 2 >= 0 and row + 2 < SIZE :
+       if col - 1 >=0 and col - 1 < SIZE:
+           if board[row + 2][col - 1] == 1:
+               print_board(board)
+       elif col + 1 >= 0 and col + 1 < SIZE:
+           if board[row + 2][col + 1] == 1:
+               print_board(board)
+
   
 def main():
     board = [[0] * SIZE for _ in range(SIZE)]
-    patrol(board, SIZE - 1, SIZE - 1)
+    for i in range(SIZE):
+        for j in range(SIZE):
+            patrol(board, i, j)
 
 
 if __name__ == '__main__':
