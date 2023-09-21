@@ -1,32 +1,50 @@
+from enum import Enum
 import random
-import time
+class Suite(Enum):
+    """花色(枚举)"""
+    SPADE, HEART, CLUB, DIAMOND = range(4)
 
+class Card:
+    """牌"""
 
-def record_time(func):
+    def __init__(self, suite, face):
+        self.suite = suite
+        self.face = face
 
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        result = func(*args, **kwargs)
-        end = time.time()
-        print(f'{func.__name__}执行时间: {end - start:.3f}秒')
-        return result
+    def __repr__(self):
+        suites = '♠♥♣♦'
+        faces = ['', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+        # 根据牌的花色和点数取到对应的字符
+        return f'{suites[self.suite.value]}{faces[self.face]}'
 
-    return wrapper
+class Poker:
+    """扑克"""
 
+    def __init__(self):
+        # 通过列表的生成式语法创建一个装52张牌的列表
+        self.cards = [Card(suite, face) for suite in Suite
+                      for face in range(1, 14)]
+        # current属性表示发牌的位置
+        self.current = 0
 
-@record_time
-def download(filename):
-    print(f'开始下载{filename}.')
-    time.sleep(random.randint(2, 6))
-    print(f'{filename}下载完成.')
+    def shuffle(self):
+        """洗牌"""
+        self.current = 0
+        # 通过random模块的shuffle函数实现列表的随机乱序
+        random.shuffle(self.cards)
 
+    def deal(self):
+        """发牌"""
+        card = self.cards[self.current]
+        self.current += 1
+        return card
 
-@record_time
-def upload(filename):
-    print(f'开始上传{filename}.')
-    time.sleep(random.randint(4, 8))
-    print(f'{filename}上传完成.')
-
-
-download('MySQL从删库到跑路.avi')
-upload('Python从入门到住院.pdf')
+    @property
+    def has_next(self):
+        """还有没有牌可以发"""
+        return self.current < len(self.cards)
+    
+poker = Poker()
+print(poker.cards)
+poker.shuffle()
+print(poker.cards)
