@@ -13,3 +13,4 @@ if __name__ == '__main__':
     tasks = [dosomething(i) for i in range(5)]
     asyncio.run(asyncio.wait(tasks))
     print('Time: ', now() - start)
+
