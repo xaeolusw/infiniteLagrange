@@ -1,11 +1,12 @@
 from PIL import Image
 
 #显示图片
-image = Image.open('./test/pig.jpg')
+image = Image.open('./test/img/pig.jpg')
 image.format, image.size, image.mode
 ('JPEG', (500, 750), 'RGB')
 image.show()
 
+exit()
 #裁剪
 rect = 80, 20, 310, 360
 image.crop(rect).show()

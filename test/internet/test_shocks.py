@@ -2,7 +2,7 @@ from socket import socket, SOCK_STREAM, AF_INET
 from base64 import b64encode
 from json import dumps
 from threading import Thread
-# from datetime import datetime
+from datetime import datetime
 
 def main():
     
@@ -22,8 +22,9 @@ def main():
             # 通过dumps函数将字典处理成JSON字符串
             json_str = dumps(my_dict)
             # 发送JSON字符串
-            # self.cclient.send(str(datetime.now()).encode('utf-8'))
+            
             self.cclient.send(json_str.encode('utf-8'))
+            # self.cclient.send(str(datetime.now()).encode('utf-8'))
             self.cclient.close()
 
     # 1.创建套接字对象并指定使用哪种传输服务
@@ -44,7 +45,7 @@ def main():
         # 启动一个线程来处理客户端的请求
         FileTransferHandler(client).start()
         # 6.断开连接
-	    # client.close()
+        client.close()
 
 
 if __name__ == '__main__':
